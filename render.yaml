@@ -1,0 +1,25 @@
+﻿services:
+  - type: web
+    name: logic2024-api
+    runtime: docker
+    repo: https://github.com/logic2024-Ahmed/api
+    branch: main
+    plan: standard
+    buildCommand: "dotnet publish -c Release"
+    startCommand: "dotnet ./bin/Release/net8.0/Logic2024.Api.dll"
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: DATABASE_URL
+        value: "DataSource=SQL8010.site4now.net;InitialCatalog=db_aaa87a_logic;UserId=db_aaa87a_logic_admin;Password=Aa854321"
+      - key: API_KEY
+        sync: false
+    dockerfilePath: Dockerfile
+    healthCheckPath: "/health"
+    autoDeploy: true
+    region: frankfurt
+    scaling:
+      minInstances: 1
+      maxInstances: 3
+      targetMemoryPercent: 60
+      targetCPUPercent: 60
